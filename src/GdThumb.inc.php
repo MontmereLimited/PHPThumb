@@ -840,6 +840,29 @@ class GdThumb extends ThumbBase
 	}
 	
 	/**
+	 * Rotates an image based on it's exif data
+	 * 
+	 * @return GdThumb
+	 */
+	public function rotateImageExif()
+	{
+		$exif = exif_read_data($this->fileName);
+		
+		switch($exif['orientation']) {
+			case 3: 
+				$this->rotateImageNDegrees(180);
+				break;
+			case 6:
+				$this->rotateImageNDegrees(-90);
+				break;
+			case 8:
+				$this->rotateImageNDegrees(90);
+			default:
+				break;
+		}
+	}
+	
+	/**
 	 * Shows an image
 	 * 
 	 * This function will show the current image by first sending the appropriate header
