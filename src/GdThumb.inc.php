@@ -847,8 +847,13 @@ class GdThumb extends ThumbBase
 	public function rotateImageExif()
 	{
 		$exif = exif_read_data($this->fileName);
-		
-		switch($exif['orientation']) {
+
+        if(!isset($exif['Orientation']))
+        {
+            return $this;
+        }
+
+		switch($exif['Orientation']) {
 			case 3: 
 				$this->rotateImageNDegrees(180);
 				break;
@@ -860,6 +865,8 @@ class GdThumb extends ThumbBase
 			default:
 				break;
 		}
+
+        return $this;
 	}
 	
 	/**
